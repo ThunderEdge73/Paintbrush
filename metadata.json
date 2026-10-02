@@ -1,0 +1,12 @@
+{
+  "id": "Paintbrush",
+  "name": "Paintbrush",
+  "author": ["ThunderEdge73"],
+  "description": "A mod that makes clicking buttons a pain in the butt.",
+  "prefix": "pbr",
+  "main_file": "Paintbrush.lua",
+  "version": "1.0.0",
+  "dependencies": [
+        "Steamodded (>=26.1002.0)"
+    ]
+}

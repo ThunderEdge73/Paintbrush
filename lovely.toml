@@ -1,0 +1,54 @@
+[manifest]
+version = "1.0.0"
+priority = 0
+dump_lua = true
+
+[[patches]]
+[patches.pattern]
+target = "engine/controller.lua"
+pattern = '''
+self.clicked.target:click()
+'''
+position = "at"
+payload = '''
+if (not self.clicked.target:is(UIElement)) and (not self.clicked.target:is(Card)) then
+    self.clicked.target:click()
+end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "engine/controller.lua"
+pattern = '''
+if self.cursor_down.target.states.drag.can then
+'''
+position = "before"
+payload = '''
+if (not PBR.initial_pos or not PBR.last_clicked) and (self.cursor_down.target:is(UIElement) or self.cursor_down.target:is(Card)) then
+    PBR.initial_pos = {x = G.CURSOR.T.x, y = G.CURSOR.T.y}
+    PBR.last_clicked = self.cursor_down.target
+end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "engine/controller.lua"
+pattern = '''
+self.cursor_up.handled = true
+'''
+position = "before"
+payload = '''
+if PBR.last_clicked and PBR.initial_pos then
+    local i_pos = PBR.initial_pos
+    local c_pos = G.CURSOR.T
+    if math.abs(i_pos.x - c_pos.x) < 0.5 and math.abs(i_pos.y - c_pos.y) > 2 then
+        PBR.last_clicked:click()
+    end
+    PBR.last_clicked = nil
+    PBR.initial_pos = nil
+end
+'''
+match_indent = true
+
