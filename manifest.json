@@ -1,0 +1,9 @@
+{
+  "name": "Paintbrush",
+  "version_number": "1.0.0",
+  "website_url": "https://github.com/ThunderEdge73/Paintbrush",
+  "description": "An anti-QOL mod that makes clicking stuff really annoying.",
+  "dependencies": [
+    "Steamodded-Steamodded-26.1002.0"
+  ]
+}
